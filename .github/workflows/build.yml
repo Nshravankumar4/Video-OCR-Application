@@ -26,21 +26,22 @@ jobs:
           libtesseract-dev \
           qt6-base-dev \
           qt6-multimedia-dev \
-          qt6-tools-dev
+          qt6-tools-dev \
+          libgl1-mesa-dev \
+          mesa-common-dev
 
     - name: Verify installations
       run: |
         cmake --version
         pkg-config --modversion opencv4
         tesseract --version
-        qmake6 --version || echo "qmake6 not required"
+        qmake6 --version
 
     - name: Configure CMake
       run: |
         mkdir -p build
         cd build
-        cmake .. \
-          -DCMAKE_BUILD_TYPE=Release
+        cmake .. -DCMAKE_BUILD_TYPE=Release
 
     - name: Build
       run: |
