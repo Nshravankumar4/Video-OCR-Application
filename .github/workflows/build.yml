@@ -1,0 +1,49 @@
+name: Qt Video OCR Build Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          build-essential \
+          cmake \
+          pkg-config \
+          libopencv-dev \
+          tesseract-ocr \
+          libtesseract-dev \
+          qt6-base-dev \
+          qt6-multimedia-dev \
+          qt6-tools-dev \
+          libgl1-mesa-dev \
+          mesa-common-dev
+
+    - name: Verify installations
+      run: |
+        cmake --version
+        pkg-config --modversion opencv4
+        tesseract --version
+        qmake6 --version
+
+    - name: Configure CMake
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --parallel

@@ -6,6 +6,9 @@
 
 #include "ocrresultdialog.h"
 #include <QApplication>
+#include <QRegularExpression>
+#include <QTimer>
+
 #include <QHBoxLayout>
 
 OCRResultDialog::OCRResultDialog(QWidget *parent)
@@ -131,3 +134,4 @@ void OCRResultDialog::onCloseClicked()
     // Close the dialog
     close();
 }
+
